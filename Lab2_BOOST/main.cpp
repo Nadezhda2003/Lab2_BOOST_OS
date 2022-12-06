@@ -26,6 +26,17 @@ void min_max(boost::container::small_vector<int, 10000> iArr)
 	}
 	cout << "Min: " << min << " Max: " << max << endl;
 }
+void average(boost::container::small_vector<int, 10000> iArr)
+{
+	boost::container::small_vector<int, 10000> arr = iArr;
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += arr[i];
+		boost::this_thread::sleep(boost::posix_time::milliseconds(12));
+	}
+	arithmeticMean = sum / n;
+	cout << "Arithmetic mean: " << arithmeticMean << endl;	
+}
 int main() {
 	cout << "Input size of the array: " << endl;
 	cin >> n;
@@ -36,7 +47,20 @@ int main() {
 		cin >> temp;
 		arr.push_back(temp);
 	}
-	boost::thread Min_Max(min_max, arr);		
+	boost::thread Min_Max(min_max, arr);	
+	boost::thread Average(average, arr);	
 	Min_Max.join();
+	Average.join();
+	for (int i = 0; i < n; i++) {
+		if (arr[i] == min || arr[i] == max) {
+			arr[i] = arithmeticMean;
+		}
+	}
+	cout << "Changed array: " << endl;
+	int elem = 0;
+	BOOST_FOREACH(elem, arr) {
+		cout << elem << " ";
+	}
+	cout << endl;
 	return 0;
 }
