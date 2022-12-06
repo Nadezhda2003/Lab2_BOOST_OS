@@ -27,5 +27,16 @@ void min_max(boost::container::small_vector<int, 10000> iArr)
 	cout << "Min: " << min << " Max: " << max << endl;
 }
 int main() {
+	cout << "Input size of the array: " << endl;
+	cin >> n;
+	boost::container::small_vector<int, 10000> arr;
+	cout << "Input the elements of the array:" << endl;
+	for (int i = 0; i < n; i++) {
+		int temp;
+		cin >> temp;
+		arr.push_back(temp);
+	}
+	boost::thread Min_Max(min_max, arr);		
+	Min_Max.join();
 	return 0;
 }
